@@ -13,7 +13,7 @@ fi
 
 php artisan migrate
 php artisan key:generate
-php artisn cache:clear
+php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 
