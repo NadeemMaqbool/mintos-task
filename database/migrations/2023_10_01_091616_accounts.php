@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('client_id');
             $table->decimal('amount', $precision = 8, $scale = 2);
             $table->timestamps();
+
+            $table->foreign('client_id')
+                ->references('client_id')
+                ->on('clients')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
