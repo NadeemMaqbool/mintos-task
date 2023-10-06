@@ -126,6 +126,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'currency_api_key' => env('CURRENCY_API_KEY'),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

@@ -14,4 +14,9 @@ class Client extends Model
         'email',
         'address'
     ];
+
+    public function accounts() {
+        return $this->hasMany(Account::class, 'client_id', 'client_id');
+    }
+
 }

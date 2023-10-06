@@ -2,6 +2,6 @@
 namespace App\Enum;
 
 enum AccountTypesEnum: string {
-    case SAVINGS = 'savings';
+    case SAVING = 'saving';
     case CURRENT = 'current';
 }

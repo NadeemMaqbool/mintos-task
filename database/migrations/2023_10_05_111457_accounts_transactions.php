@@ -13,20 +13,15 @@ return new class extends Migration
     {
         Schema::create('accounts_transactions', function(Blueprint $table) {
             $table->id();
-            $table->string('transaction_id');
-            $table->string('sender_account_id');
-            $table->string('receiver_account_id');
+            $table->string('transaction_id')->unique();
+            $table->string('account_id');
+            $table->enum('transaction_type', ['debit','credit']);
+            $table->decimal('amount', $precision = 8, $scale = 2);
             $table->timestamps();
 
-            $table->foreign('sender_account_id')
+            $table->foreign('account_id')
                 ->references('account_id')
                 ->on('accounts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
-            $table->foreign('transaction_id')
-                ->references('transaction_id')
-                ->on('transactions')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
