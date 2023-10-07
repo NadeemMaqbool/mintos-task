@@ -1,9 +1,13 @@
 <?php
 
+use App\Providers\RapidApiServiceProvider;
+use App\Services\RapidApiService;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
 return [
+
+    'currency_api_key' => env('CURRENCY_API_KEY'),
 
     /*
     |--------------------------------------------------------------------------
@@ -126,8 +130,6 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
-    'currency_api_key' => env('CURRENCY_API_KEY'),
-
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver
@@ -170,6 +172,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\RapidApiServiceProvider::class
     ])->toArray(),
 
     /*

@@ -13,11 +13,7 @@ class Account extends Model
 
     protected $fillable = [];
 
-    protected $casts = [
-        'currency' => CurrencyEnum::class,
-        'account_type' => AccountTypesEnum::class,
-    ];
-
+    
     public function accountsTransactions() {
         return $this->hasMany(AccountTransaction::class, 'account_id', 'account_id');
     }

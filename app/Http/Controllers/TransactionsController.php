@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enum\CurrencyEnum;
 use Illuminate\Http\Request;
-use App\Repositories\TransactionRepository;
-use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
+use App\Exceptions\CustomException;
+use App\Services\TransactionService;
+use Illuminate\Validation\Rules\Enum;
+use Illuminate\Support\Facades\Validator;
+use App\Repositories\TransactionRepository;
+use App\Http\Requests\TransactionDataRequest;
 
 class TransactionsController extends Controller
 {
@@ -16,12 +21,14 @@ class TransactionsController extends Controller
     {}
 
 
-    public function getTransactionHistory(
-        string $accountId,
-        int $offset,
-        int $limit
-    ): JsonResponse 
+    public function getTransactionHistory(Request $request): JsonResponse 
     {
+        $accountId = $request->account_id;
+        $offset = $request->offset;
+        $limit = $request->limit;
+
+        logger('inputs', $request->all());
+
         $transactions = $this->transactionRepository->getAllTransactyionsByAccountId(
             $accountId, $offset, $limit
         );
@@ -34,16 +41,30 @@ class TransactionsController extends Controller
 
     public function transferMoney(Request $request): JsonResponse
     {
-        $transaction = $this->transactionService->transferAmountInAccount($request);
-        
-        if (!$transaction) {
-            return response()->json([
-                'message' => 'Transaction failed as sender account does not have enough balance'
-            ], 200);    
-        }
+        try {
+            $validator = Validator::make($request->all(), [
+                "senderAccountId" => 'required',
+                "receiverAccountId" => 'required',
+                "amount" => 'required|gte:1',
+                "currency" => ['required', new Enum(CurrencyEnum::class)]
+            ]);
 
-        return response()->json([
-            'message' => 'Transaction completed successfully'
-        ], 201);
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Error: '. $validator->errors()
+                ], 400);
+            }
+            
+            $this->transactionService->transferAmountInAccount($request);
+            
+            return response()->json([
+                'message' => 'Transaction completed successfully'
+            ], 201);
+
+        } catch (CustomException $e) {
+            return response()->json([
+                'message' => 'Error: '. $e->getMessage()
+            ], 400);
+        }
     }
 }

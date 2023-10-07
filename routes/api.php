@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
     Route::get('/client/{clientId}', [ClientsController::class, 'getAllAccounts']);
-    Route::get('/accounts/{accountId}/{offset}/{limit}', [TransactionsController::class, 'getTransactionHistory']);
+    Route::get(
+        '/transactions',
+        [TransactionsController::class, 'getTransactionHistory']
+    );
     Route::post('/accounts/transfer', [TransactionsController::class, 'transferMoney']);
 });

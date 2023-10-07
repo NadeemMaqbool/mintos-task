@@ -2,8 +2,8 @@
 namespace App\Enum;
 
 enum CurrencyEnum: string {
-    case DOLLAR = "dollar";
-    case EURO = "euro";
-    case POUND = "pound";
+    case DOLLAR = "USD";
+    case EURO = "EUR";
+    case POUND = "GBP";
 }
 

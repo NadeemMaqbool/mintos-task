@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('transaction_id')->unique();
             $table->string('account_id');
             $table->enum('transaction_type', ['debit','credit']);
-            $table->decimal('amount', $precision = 8, $scale = 2);
+            $table->string('amount');
             $table->timestamps();
 
             $table->foreign('account_id')

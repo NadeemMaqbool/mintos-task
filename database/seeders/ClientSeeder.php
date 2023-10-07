@@ -74,7 +74,7 @@ class ClientSeeder extends Seeder
         $offset = 'P'.$index.'Y'.$index.'M';
         $datetime = new DateTime('01/01/2010');
         $date = $datetime->add(new DateInterval($offset));
-        logger('DateTime', [$offset, $date]);
+        
         return $date;
     }
 
