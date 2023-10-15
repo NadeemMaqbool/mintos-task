@@ -11,7 +11,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = ['account_id', 'currency', 'amount', 'client_id', 'account_type'];
 
     
     public function accountsTransactions() {

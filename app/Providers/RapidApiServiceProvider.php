@@ -15,8 +15,6 @@ class RapidApiServiceProvider extends ServiceProvider
     {
         $currency_api_key = config('app.currency_api_key');
         
-        logger('Rapid API', [$currency_api_key]);
-        
         $this->app->bind(RapidApiService::class, function ($app) use ($currency_api_key) {
             return new RapidApiService($currency_api_key);
         });

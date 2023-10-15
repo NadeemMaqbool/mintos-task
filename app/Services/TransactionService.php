@@ -27,15 +27,19 @@ class TransactionService {
         $senderAccountDetails = $this->accountRepository->getAccountByAccountId($sender);
         $receiverAccounDetails = $this->accountRepository->getAccountByAccountId($receiver);
         
+        if (!$senderAccountDetails || !$receiverAccounDetails) {
+            throw new CustomException('Account id does not exist');
+        }
+        
+        if ($receiverAccounDetails->currency !== $currency) {
+            throw new CustomException('Requested currency does not match with receiver account');
+        }
+
         $convertedAmount = $this->currencyExchangeService->getCurrencyExchange(
             $senderAccountDetails->currency,
             $currency,
             $amount
         );
-
-        if ($receiverAccounDetails->currency !== $currency) {
-            throw new CustomException('Requested currency does not match with receiver account');
-        }
 
         $senderNewBalance = $senderAccountDetails->amount - $convertedAmount;
         
@@ -57,4 +61,5 @@ class TransactionService {
 
         return $amount;
     }
+
 }

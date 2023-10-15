@@ -23,12 +23,11 @@ class TransactionRepository {
         int $limit
     ) 
     {
-        $query = AccountTransaction::where('account_id', $accountId)
+        return AccountTransaction::where('account_id', $accountId)
             ->offset($offset)
             ->limit($limit)
             ->orderBy('account_id', 'DESC')
-            ->toSql();
-        dd($query);
+            ->get();
     }
 
 }

@@ -40,6 +40,11 @@ class ClientSeeder extends Seeder
                 'email' => fake()->unique()->safeEmail(),
                 'client_name' => fake()->name(),
             ],
+            [
+                'client_id' => 'FF00110010',
+                'email' => fake()->unique()->safeEmail(),
+                'client_name' => fake()->name(),
+            ]
         ];
 
         DB::table('clients')->insert($clientAccounts);
@@ -47,12 +52,14 @@ class ClientSeeder extends Seeder
         $accounts = [];
 
         foreach ($clientAccounts as $clientAccount) {
+            $amount = 1000;
+            
             $accounts[] = [
                 'account_id' => Str::random(10),
                 'client_id' => $clientAccount['client_id'],
                 'currency' => CurrencyEnum::DOLLAR,
                 'account_type' => AccountTypesEnum::SAVING,
-                'amount' => 1000,
+                'amount' => $amount,
                 'created_at' => $this->genarateRandomDates()
             ];
 
@@ -67,6 +74,14 @@ class ClientSeeder extends Seeder
         }
 
         DB::table('accounts')->insert($accounts);
+        DB::table('accounts')->insert([
+            'account_id' => Str::random(10),
+            'client_id' => 'FF00110010',
+            'currency' => CurrencyEnum::POUND,
+            'account_type' => AccountTypesEnum::SAVING,
+            'amount' => 0,
+            'created_at' => $this->genarateRandomDates()
+        ]);
     }
 
     private function genarateRandomDates(): DateTime {

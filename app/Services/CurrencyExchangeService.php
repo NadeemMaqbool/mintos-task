@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\CustomException;
 use Illuminate\Http\Client\Response as ClientResponse;
 
 class CurrencyExchangeService {
@@ -22,7 +23,7 @@ class CurrencyExchangeService {
      * @return ClientResponse
      * 
      */
-    public function getCurrencyExchange(string $from, string $to, float $amount)
+    public function getCurrencyExchange(string $from, string $to, float $amount): float
     {
         $params  = [
             'from' => $from,
@@ -30,14 +31,14 @@ class CurrencyExchangeService {
             'amount' => $amount
         ];
 
-        $response = $this->rapidApiService->get($this->host, $this->url, $params);
-        $data = json_decode($response, true);
+        $convertedAmount= 0.0;
+        $data = $this->rapidApiService->get($this->host, $this->url, $params);
         
-        if ($response->failed()) {
-            return false;
+        if (!$data) {
+            throw new CustomException('Error while retrieving currency exchange');
         }
-        $convertedAmount = $data['rates'][$to]['rate_for_amount'];
-        
+
+        $convertedAmount = $data;
         return $convertedAmount;
     }
 }
