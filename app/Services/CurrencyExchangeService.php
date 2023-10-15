@@ -35,7 +35,7 @@ class CurrencyExchangeService {
         $data = $this->rapidApiService->get($this->host, $this->url, $params);
         
         if (!$data) {
-            throw new CustomException('Error while retrieving currency exchange');
+            return false;
         }
 
         $convertedAmount = $data;

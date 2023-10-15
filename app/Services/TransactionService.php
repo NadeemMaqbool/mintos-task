@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Exceptions\CustomException;
 use Illuminate\Http\Request;
+use App\Exceptions\CustomException;
+use Illuminate\Support\Facades\Cache;
 use App\Repositories\AccountRepository;
-use App\Repositories\TransactionRepository;
 use App\Services\CurrencyExchangeService;
+use App\Repositories\TransactionRepository;
 
 class TransactionService {
     public function __construct(
@@ -41,6 +42,16 @@ class TransactionService {
             $amount
         );
 
+        if (!$convertedAmount) {
+            $convertedAmount = Cache::get($currency);
+            
+            if (!$convertedAmount) {
+                throw new CustomException('Error while retrieving currency exchange');
+            }
+        } else {
+            Cache::put($currency, $convertedAmount, 30*60);
+        }
+        
         $senderNewBalance = $senderAccountDetails->amount - $convertedAmount;
         
         if ($senderNewBalance < 0) {
