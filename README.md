@@ -54,7 +54,7 @@ GET http://localhost:8000/api/v1/accounts/{clientId}
 - Get all transactions history
 
 ```
-GET http://localhost:8000/api/v1/accounts/{clientId}
+http://localhost:8000/api/v1/transactions?account_id={accountId}&offset=0&limit=5
 ```
 
 - Transfer money from account to another using account ids
