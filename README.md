@@ -13,7 +13,7 @@
     DB_USERNAME=root
     DB_PASSWORD=developer@1
 ```
-- Sorry i forgot to add earlier, please do add this RapidApi key in ENV for Currency excange to work.
+- Sorry i forgot to add earlier, please do add this RapidApi(Currency Converter) key in ENV for Currency excange to work.
 
 ```
 CURRENCY_API_KEY=4f7822cb4fmsh93ff310da7**********
