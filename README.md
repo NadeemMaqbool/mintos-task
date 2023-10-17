@@ -13,7 +13,11 @@
     DB_USERNAME=root
     DB_PASSWORD=developer@1
 ```
+- Sorry i forgot to add earlier, please do add this RapidApi key in ENV for Currency excange to work.
 
+```
+CURRENCY_API_KEY=4f7822cb4fmsh93ff310da7**********
+```
 - Before running docker you can run this command inside Docker folder:
 this command will make sure you have right permissions to run some artisan commands to setup project
 
